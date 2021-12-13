@@ -34,6 +34,9 @@ namespace CourseApi
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            // services.AddController();
+            services.AddCors();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,13 +46,14 @@ namespace CourseApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
-
+            
+            
             app.UseHttpsRedirection();
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
             app.UseMvc();
+            // app.UseEndpoints(endpoints => {
+            //     endpoints.MapController();
+            // });
         }
     }
 }
